@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\bulga\Desktop\4kurs1semester\software_architecture_and_design\Client\helpers\Socket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\bulga\Desktop\4kurs1semester\software_architecture_and_design\Client\helpers\SocketClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\bulga\Desktop\4kurs1semester\software_architecture_and_design\Client\helpers\Socket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\bulga\Desktop\4kurs1semester\software_architecture_and_design\Client\helpers\SocketClient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\bulga\Desktop\4kurs1semester\software_architecture_and_design\Client\helpers\UtilFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\bulga\Desktop\4kurs1semester\software_architecture_and_design\Client\helpers\UtilString.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\bulga\Desktop\4kurs1semester\software_architecture_and_design\Client\helpers\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{2D454A7E-6224-316A-9254-1E6C7D39F527}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{FAEB8469-B079-3BF5-BF1E-3F3D03E764FD}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
