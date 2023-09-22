@@ -1,0 +1,10 @@
+^C:\USERS\BULGA\DESKTOP\4KURS1SEMESTER\SOFTWARE_ARCHITECTURE_AND_DESIGN\SERVER\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/bulga/Desktop/4kurs1semester/software_architecture_and_design/Server -BC:/Users/bulga/Desktop/4kurs1semester/software_architecture_and_design/Server/build --check-stamp-file C:/Users/bulga/Desktop/4kurs1semester/software_architecture_and_design/Server/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

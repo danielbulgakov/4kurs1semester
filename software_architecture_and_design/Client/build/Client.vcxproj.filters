@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\bulga\Desktop\4kurs1semester\software_architecture_and_design\Client\AppClientMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\bulga\Desktop\4kurs1semester\software_architecture_and_design\Client\AppClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\bulga\Desktop\4kurs1semester\software_architecture_and_design\Client\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{FAEB8469-B079-3BF5-BF1E-3F3D03E764FD}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
