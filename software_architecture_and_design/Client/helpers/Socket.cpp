@@ -47,7 +47,20 @@ int Socket::send(const char* msg, int len)
     if(len <= 0)
         return 0;
     printf("SEND\n----------\n%s\n----------\n", msg);
-    return ::send(m_socket, msg, len, 0);
+
+    int bytesSent = 0;
+    int result = 0;
+
+    while (bytesSent < len) {
+        result = ::send(m_socket, msg + bytesSent, len - bytesSent, 0);
+        if (result == -1) {
+            bytesSent = -1; // Error value to return from fun
+            break;
+        }
+        bytesSent += result;
+    }
+
+    return bytesSent;
 }
 
 int Socket::sendStr(const std::string& str)

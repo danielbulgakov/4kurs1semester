@@ -1,4 +1,0 @@
-C:/Users/bulga/Desktop/4kurs1semester/software_architecture_and_design/Server/build/CMakeFiles/Server.dir
-C:/Users/bulga/Desktop/4kurs1semester/software_architecture_and_design/Server/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/bulga/Desktop/4kurs1semester/software_architecture_and_design/Server/build/CMakeFiles/ZERO_CHECK.dir
-C:/Users/bulga/Desktop/4kurs1semester/software_architecture_and_design/Server/build/helpers/CMakeFiles/helpers.dir
