@@ -25,6 +25,7 @@ Socket::~Socket()
 
 bool Socket::init(DWORD timeout)
 {
+    close();
     if ((m_socket = socket(AF_INET, SOCK_STREAM, 0)) == -1)
     {
         printf("socket error\n");
