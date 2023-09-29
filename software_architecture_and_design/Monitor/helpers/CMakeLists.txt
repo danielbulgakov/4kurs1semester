@@ -1,19 +1,19 @@
 # Set the source files for the helper library
 set(HELPER_SOURCES
-    Socket.cpp
-    SocketClient.cpp
+    Console.cpp
+    Process.cpp
 )
 
 # Set the header files for the helper library
 set(HELPER_HEADERS
-    Socket.h
-    SocketClient.h
+    Console.h
+    Process.h
     UtilFile.h
     UtilString.h
 )
 
 # Create the helper library target
-add_library(helpers_client ${HELPER_SOURCES} ${HELPER_HEADERS})
+add_library(helpers ${HELPER_SOURCES} ${HELPER_HEADERS})
 
 # Add the include directories for the helper library
-target_include_directories(helpers_client PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(helpers PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

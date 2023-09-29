@@ -1,14 +1,15 @@
 #include "Appclient.h"
 #include "helpers/UtilString.h"
 #include <vector>
+
 #pragma comment(lib, "Ws2_32.lib")
 
 int main (int argc, char *argv[])
 {
     if(argc < 3 || split(argv[1], ":").size() != 2)
     {
-        printf("USAGE: _AppClient.exe <HOST:PORT> <MESSAGE>\n\n");
-        printf("Example: _AppClient.exe 192.168.1.1:12345 Hello world!\n");
+        printf("USAGE: Client.exe <HOST:PORT> <MESSAGE>\n\n");
+        printf("Example: Client.exe 192.168.1.1:12345 Hello world!\n");
         return 0;
     }
     

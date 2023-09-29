@@ -23,9 +23,8 @@ Socket::~Socket()
         WSACleanup(); // this is executed once during app teardown
 }
 
-bool Socket::init(DWORD timeout)
+bool Socket::init(uint32_t timeout)
 {
-    close();
     if ((m_socket = socket(AF_INET, SOCK_STREAM, 0)) == -1)
     {
         printf("socket error\n");
@@ -48,20 +47,7 @@ int Socket::send(const char* msg, int len)
     if(len <= 0)
         return 0;
     printf("SEND\n----------\n%s\n----------\n", msg);
-
-    int bytesSent = 0;
-    int result = 0;
-
-    while (bytesSent < len) {
-        result = ::send(m_socket, msg + bytesSent, len - bytesSent, 0);
-        if (result == -1) {
-            bytesSent = -1; // Error value to return from fun
-            break;
-        }
-        bytesSent += result;
-    }
-
-    return bytesSent;
+    return ::send(m_socket, msg, len, 0);
 }
 
 int Socket::sendStr(const std::string& str)

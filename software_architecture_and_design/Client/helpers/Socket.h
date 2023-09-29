@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <windows.h>
 
 class SocketServer;
 
@@ -11,7 +10,7 @@ class Socket
 public:
     Socket();
     virtual ~Socket();
-    bool init(DWORD timeout = 0); // creates socket and performs basic initialization
+    bool init(uint32_t timeout = 0); // creates socket and performs basic initialization
     bool isValid(); // checks if socket is valid
     int send(const char* msg, int len); // sends a message via socket
     int sendStr(const std::string& str); // sends a string via socket
