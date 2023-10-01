@@ -1,0 +1,13 @@
+# ninja log v5
+1	587	7178618590977098	Client/CMakeFiles/Client.dir/AppClient.cpp.obj	14c58c4d47fe82ff
+11	603	7178618591164065	Client/CMakeFiles/Client.dir/AppClientMain.cpp.obj	857d9dc7dfb9af29
+20	1159	7178618596745812	Client/helpers/CMakeFiles/helpers_client.dir/Socket.cpp.obj	5eeebbdc6583be74
+30	1161	7178618596745812	Client/helpers/CMakeFiles/helpers_client.dir/SocketClient.cpp.obj	ab121171852db026
+1162	1252	7178618597659575	Client/helpers/helpers_client.lib	43f36ae234b1be7
+1252	1660	7178618601661050	Client/Client.exe	f90efa55e15177fe
+2	933	7178618792278234	Server/CMakeFiles/Server.dir/AppServer.cpp.obj	a33d846feeece05
+10	1114	7178618794080191	Server/CMakeFiles/Server.dir/AppServerMain.cpp.obj	3ac4d6b81781ca41
+30	1131	7178618794299678	Server/helpers/CMakeFiles/helpers_server.dir/Socket.cpp.obj	2eb690c3bc219e30
+19	1171	7178618794679775	Server/helpers/CMakeFiles/helpers_server.dir/SocketServer.cpp.obj	863c7821e41da886
+1171	1236	7178618795368542	Server/helpers/helpers_server.lib	224f306e469b7501
+1236	1604	7178618798925167	Server/Server.exe	8bb20d1e0332680b
