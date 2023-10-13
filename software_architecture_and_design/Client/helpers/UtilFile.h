@@ -6,6 +6,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 //#include <dirent.h>
+#include <filesystem>
 
 inline static char* fileRead(const std::string& path, unsigned long long* fileSize = NULL, bool text = false)
 {
@@ -80,11 +81,18 @@ inline static int fileWriteExclusive(const std::string& name, std::string str)
     return result;
 }
 */
-bool fileExists(const std::string& path)
+inline bool fileExists(const std::string& path)
 {
     FILE* f = fopen(path.c_str(), "r");
     if(!f)
         return false;
     fclose(f);
     return true;
+}
+
+// Checking if file is text by its extension
+inline bool isTextFile(const std::string& path) {
+    std::filesystem::path p(path);
+    std::string ext = p.extension().string();
+    return ext == ".txt" || ext == ".csv" || ext == ".json" || ext == ".xml" || ext == ".html" || ext == ".css" || ext == ".js" || ext == ".py" || ext == ".c" || ext == ".cpp" || ext == ".h" || ext == ".java";
 }

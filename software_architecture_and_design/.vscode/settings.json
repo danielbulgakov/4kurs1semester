@@ -1,3 +1,9 @@
 {
-    "cmake.sourceDirectory": "C:/Users/bulga/Desktop/4kurs1semester/software_architecture_and_design/Client/helpers"
+    "cmake.sourceDirectory": "C:/Users/bulga/Desktop/4kurs1semester/software_architecture_and_design/Client/helpers",
+    "cmake.configureOnOpen": true,
+    "files.associations": {
+        "vector": "cpp",
+        "xstring": "cpp",
+        "filesystem": "cpp"
+    }
 }
