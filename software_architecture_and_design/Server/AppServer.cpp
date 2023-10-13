@@ -10,12 +10,12 @@ bool Server::init(int port)
     if(!m_socket.init(1000) || !m_socket.listen(port))
         return false;
 
-     if(!fileWriteExclusive("resources\\CREATED", toStr(m_socket.port()) + "," + toStr(_getpid())))
+     if(!fileWriteExclusive("..\\resources\\CREATED", toStr(m_socket.port()) + "," + toStr(_getpid())))
          return false;
 
     printf("server started: port %d, pid %d\n", m_socket.port(), _getpid());
 
-    char* state = fileReadStr("resources\\STATE"); // load state from previous run
+    char* state = fileReadStr("..\\resources\\STATE"); // load state from previous run
     if(state)
     {
         for(std::string& line : split(state, "\n"))
@@ -31,7 +31,7 @@ void Server::run()
 {
     while(1)
     {
-        fileWriteStr(std::string("resources\\ALIVE") + toStr(_getpid()), ""); // pet the watchdog
+        fileWriteStr(std::string("..\\resources\\ALIVE") + toStr(_getpid()), ""); // pet the watchdog
         std::shared_ptr<Socket> client = m_socket.accept(); // accept incoming connection
         if(!client->isValid())
             continue;
@@ -57,7 +57,7 @@ void Server::run()
         else if(n > 0) // this is Client's request who wants to upload some data
         {
             m_data.push_back(data); // store it in the feed
-            fileAppend("resources\\STATE", m_data.back() + "\n"); // store it in the file for subsequent runs
+            fileAppend("..\\resources\\STATE", m_data.back() + "\n"); // store it in the file for subsequent runs
         }
     }
 }

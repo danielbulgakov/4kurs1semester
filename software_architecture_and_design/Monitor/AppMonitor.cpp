@@ -23,7 +23,7 @@ bool Monitor::init()
 
 bool Monitor::check()
 {
-    std::string heartBeatFilePath = std::string("./resources/ALIVE" + sServer.pid());
+    std::string heartBeatFilePath = std::string("../resources/ALIVE" + sServer.pid());
 
     // If we got heartbeat from Server as a file
     // Remove this file, and wait for another beat

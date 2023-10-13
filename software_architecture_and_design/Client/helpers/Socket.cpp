@@ -3,6 +3,7 @@
 
 #include "Socket.h"
 #include "UtilFile.h"
+#include "UtilString.h"
 
 static int sSocketId = 0;
 
@@ -85,4 +86,18 @@ void Socket::close()
         shutdown(m_socket, SD_BOTH);
         closesocket(m_socket);
     }
+}
+
+int Socket::sendFile(const std::string &path) {
+    size_t len;
+    int written = 0;
+    char* fileBytes;
+    auto splitted = split(path, "/");
+    // Send file name to server
+    written += this->sendStr(splitted[splitted.size() - 1]);
+
+    // Gather file bytes and send it to server
+    fileBytes = fileRead(path, &len , false);
+    written += this->send(fileBytes, (int)len);
+    return written;
 }
