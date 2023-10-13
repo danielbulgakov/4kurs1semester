@@ -5,6 +5,7 @@
 #include <io.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+
 //#include <dirent.h>
 
 inline static char* fileRead(const std::string& path, unsigned long long* fileSize = NULL, bool text = false)

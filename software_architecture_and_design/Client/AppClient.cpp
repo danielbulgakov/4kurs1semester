@@ -28,14 +28,8 @@ bool Client::send(const std::string& url, const std::string& msg)
     }
 
     int len;
-
-    if (fileExists(msg)) {
-        printf("sending file with path : \"%s\"\n", msg.c_str());
-        len = s.sendFile(msg);
-    } else {
-        printf("sending text message \"%s\"\n", msg.c_str());
-        len = s.sendStr(msg);
-    }
+    printf("sending text message \"%s\"\n", msg.c_str());
+    len = s.sendStr(msg);
 
     printf("sent %d bytes\n", len);
     return len > 0;

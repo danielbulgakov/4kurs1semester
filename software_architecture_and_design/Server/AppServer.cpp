@@ -10,10 +10,8 @@ bool Server::init(int port)
     if(!m_socket.init(1000) || !m_socket.listen(port))
         return false;
 
-    // --- CAUSING AN ERROR ---
-//     if(!fileWriteExclusive("resources\\CREATED", toStr(m_socket.port()) + "," + toStr(_getpid())))
-//         return false;
-    // --- CAUSING AN ERROR ---
+     if(!fileWriteExclusive("resources\\CREATED", toStr(m_socket.port()) + "," + toStr(_getpid())))
+         return false;
 
     printf("server started: port %d, pid %d\n", m_socket.port(), _getpid());
 
@@ -33,9 +31,8 @@ void Server::run()
 {
     while(1)
     {
-        // --- CAUSING AN ERROR ---
-//         fileWriteStr(std::string("resources\\ALIVE") + toStr(_getpid()), ""); // pet the watchdog
-        // --- CAUSING AN ERROR ---
+        fileWriteStr(std::string("resources\\ALIVE") + toStr(_getpid()), ""); // pet the watchdog
+
         std::shared_ptr<Socket> client = m_socket.accept(); // accept incoming connection
         if(!client->isValid())
             continue;

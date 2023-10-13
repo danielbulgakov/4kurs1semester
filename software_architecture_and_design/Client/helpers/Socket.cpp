@@ -86,20 +86,3 @@ void Socket::close()
         closesocket(m_socket);
     }
 }
-
-int Socket::sendFile(const std::string &path) {
-    if (!fileExists(path)) {
-        return -1; // File does not exist
-    }
-    // Read file
-    size_t len;
-    char* fileBytes = fileRead(path, &len, isTextFile(path));
-
-    // Send file
-    int bytesSent = this->send(fileBytes, (int)len);
-
-    delete [] fileBytes;
-
-    return bytesSent;
-}
-

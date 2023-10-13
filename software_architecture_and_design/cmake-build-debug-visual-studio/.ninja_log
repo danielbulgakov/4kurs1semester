@@ -48,3 +48,10 @@
 1476	1733	7189245790751480	Client/Client.exe	f90efa55e15177fe
 2	1509	7189246057935873	Client/CMakeFiles/Client.dir/AppClient.cpp.obj	14c58c4d47fe82ff
 1510	1708	7189246059628900	Client/Client.exe	f90efa55e15177fe
+1	839	7189289191478884	Server/CMakeFiles/Server.dir/AppServer.cpp.obj	a33d846feeece05
+840	1128	7189289194052765	Server/Server.exe	8bb20d1e0332680b
+14	823	7189301907351024	Server/CMakeFiles/Server.dir/AppServer.cpp.obj	a33d846feeece05
+1	1422	7189301913341461	Server/CMakeFiles/Server.dir/AppServerMain.cpp.obj	3ac4d6b81781ca41
+1422	1714	7189301915847806	Server/Server.exe	8bb20d1e0332680b
+0	1237	7189302151541150	Server/CMakeFiles/Server.dir/AppServerMain.cpp.obj	3ac4d6b81781ca41
+1238	1410	7189302153021038	Server/Server.exe	8bb20d1e0332680b
