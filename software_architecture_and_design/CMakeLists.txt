@@ -9,4 +9,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # include the subdirectories
 add_subdirectory(Client)
+add_subdirectory(Monitor)
 add_subdirectory(Server)

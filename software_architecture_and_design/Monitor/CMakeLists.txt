@@ -15,4 +15,4 @@ include_directories(${PROJECT_SOURCE_DIR})
 
 # add subdirectory
 add_subdirectory(helpers)
-target_link_libraries(Monitor helpers)
+target_link_libraries(Monitor helpers_monitor)

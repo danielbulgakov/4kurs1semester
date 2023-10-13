@@ -13,7 +13,7 @@ set(HELPER_HEADERS
 )
 
 # Create the helper library target
-add_library(helpers ${HELPER_SOURCES} ${HELPER_HEADERS})
+add_library(helpers_monitor ${HELPER_SOURCES} ${HELPER_HEADERS})
 
 # Add the include directories for the helper library
-target_include_directories(helpers PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(helpers_monitor PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

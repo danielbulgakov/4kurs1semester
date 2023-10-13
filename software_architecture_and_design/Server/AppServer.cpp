@@ -32,7 +32,6 @@ void Server::run()
     while(1)
     {
         fileWriteStr(std::string("resources\\ALIVE") + toStr(_getpid()), ""); // pet the watchdog
-
         std::shared_ptr<Socket> client = m_socket.accept(); // accept incoming connection
         if(!client->isValid())
             continue;
