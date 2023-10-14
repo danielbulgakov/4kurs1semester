@@ -8,8 +8,6 @@ set(HELPER_SOURCES
 set(HELPER_HEADERS
     Socket.h
     SocketServer.h
-    UtilFile.h
-    UtilString.h
 )
 
 # Create the helper library target

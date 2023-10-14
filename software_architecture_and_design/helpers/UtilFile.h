@@ -5,8 +5,20 @@
 #include <io.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-//#include <dirent.h>
-#include <filesystem>
+#include <direct.h>
+
+inline void makePath(std::string path)
+{
+    if (path == "")
+        return;
+    size_t start = 0, end = 0;
+    do
+    {
+        end = path.find("\\", start);
+        _mkdir(end != std::string::npos ? path.substr(0, end + 1).c_str() : path.c_str());
+        start = end + 1;
+    } while (end != std::string::npos);
+}
 
 inline static char* fileRead(const std::string& path, unsigned long long* fileSize = NULL, bool text = false)
 {
@@ -36,11 +48,18 @@ inline static char* fileReadStr(const std::string& path)
 
 inline static int fileWrite(const std::string& name, const char* bulk, int len, bool append = false, bool exclusive = false)
 {
+    size_t pos = name.rfind("\\");
+    if(pos != std::string::npos)
+        makePath(name.substr(0, pos));
+
     FILE* f = NULL;
     if(append)
         f = fopen(name.c_str(), "ab");
     else
-        f = _fdopen(_open(name.c_str(), (exclusive ? _O_EXCL : 0) | _O_WRONLY | _O_CREAT | _O_TRUNC | _O_BINARY, _S_IREAD | _S_IWRITE), "wb");
+    {
+        int fd = _open(name.c_str(), (exclusive ? _O_EXCL : 0) | _O_WRONLY | _O_CREAT | _O_TRUNC | _O_BINARY, _S_IREAD | _S_IWRITE);
+        f = fd == -1 ? NULL : _fdopen(fd, "wb");
+    }
     if(!f)
         return 0;
 
@@ -88,11 +107,4 @@ inline bool fileExists(const std::string& path)
         return false;
     fclose(f);
     return true;
-}
-
-// Checking if file is text by its extension
-inline bool isTextFile(const std::string& path) {
-    std::filesystem::path p(path);
-    std::string ext = p.extension().string();
-    return ext == ".txt" || ext == ".csv" || ext == ".json" || ext == ".xml" || ext == ".html" || ext == ".css" || ext == ".js" || ext == ".py" || ext == ".c" || ext == ".cpp" || ext == ".h" || ext == ".java";
 }

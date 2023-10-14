@@ -2,7 +2,7 @@
 #include <processthreadsapi.h>
 #include <synchapi.h>
 #include "Process.h"
-#include "UtilString.h"
+#include "../../helpers/UtilString.h"
 
 bool Process::create(char* cmd)
 {

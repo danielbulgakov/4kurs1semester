@@ -11,3 +11,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 add_subdirectory(Client)
 add_subdirectory(Monitor)
 add_subdirectory(Server)
+
+# add subdirectory
+add_subdirectory(helpers)
+target_include_directories(Client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../helpers)
+target_include_directories(Monitor PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../helpers)
+target_include_directories(Server PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../helpers)

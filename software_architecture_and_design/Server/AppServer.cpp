@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "AppServer.h"
-#include "helpers/UtilString.h"
-#include "helpers/UtilFile.h"
+#include "../helpers/UtilString.h"
+#include "../helpers/UtilFile.h"
 #include <string>
 #include <process.h>
 
