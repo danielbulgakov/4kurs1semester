@@ -4,11 +4,6 @@
     "files.associations": {
         "vector": "cpp",
         "xstring": "cpp",
-        "filesystem": "cpp",
-        "initializer_list": "cpp",
-        "list": "cpp",
-        "type_traits": "cpp",
-        "xtree": "cpp",
-        "xutility": "cpp"
+        "filesystem": "cpp"
     }
 }

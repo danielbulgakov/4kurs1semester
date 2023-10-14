@@ -5,8 +5,8 @@
 #include <filesystem>
 #include "AppMonitor.h"
 #include "helpers/Process.h"
-#include "../helpers/UtilString.h"
-#include "../helpers/UtilFile.h"
+#include "helpers/UtilString.h"
+#include "helpers/UtilFile.h"
 
 static Process sServer;
 static std::string sPort = "0";

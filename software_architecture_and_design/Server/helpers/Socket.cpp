@@ -2,7 +2,7 @@
 #include <WS2tcpip.h>
 
 #include "Socket.h"
-#include "../../helpers/UtilString.h"
+#include "UtilString.h"
 
 static int sSocketId = 0;
 

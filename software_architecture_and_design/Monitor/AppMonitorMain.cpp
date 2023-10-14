@@ -22,6 +22,6 @@ int main()
             Monitor::reset();
             m.init();
         }
-        Sleep(5000);
+        Sleep(3000);
     }
 }

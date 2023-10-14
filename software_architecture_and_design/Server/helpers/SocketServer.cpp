@@ -2,7 +2,7 @@
 #include <WS2tcpip.h>
 
 #include "SocketServer.h"
-#include "../../helpers/UtilString.h"
+#include "UtilString.h"
 
 bool SocketServer::listen(int port)
 {

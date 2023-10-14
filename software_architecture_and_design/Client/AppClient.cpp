@@ -1,8 +1,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "AppClient.h"
 #include "helpers/SocketClient.h"
-#include "../helpers/UtilString.h"
-#include "../helpers/UtilFile.h"
+#include "helpers/UtilString.h"
+#include "helpers/UtilFile.h"
 #include <map>
 #include <chrono>
 #include <thread>

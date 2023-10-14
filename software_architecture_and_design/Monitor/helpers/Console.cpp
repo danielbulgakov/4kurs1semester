@@ -1,5 +1,5 @@
 #include "Console.h"
-#include "../../helpers/UtilString.h"
+#include "UtilString.h"
 
 void (*sCtrlCHandler)() = NULL;
 

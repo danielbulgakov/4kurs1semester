@@ -8,6 +8,8 @@ set(HELPER_SOURCES
 set(HELPER_HEADERS
     Console.h
     Process.h
+    UtilFile.h
+    UtilString.h
 )
 
 # Create the helper library target
