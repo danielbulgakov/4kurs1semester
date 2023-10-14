@@ -3,7 +3,7 @@
 #include <WS2tcpip.h>
 
 #include "SocketClient.h"
-#include "UtilString.h"
+#include "../../helpers/UtilString.h"
 
 bool SocketClient::connect(const std::string& url)
 {

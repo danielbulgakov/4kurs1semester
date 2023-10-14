@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "AppServer.h"
-#include "helpers/UtilString.h"
-#include "helpers/UtilFile.h"
+#include "../helpers/UtilString.h"
+#include "../helpers/UtilFile.h"
 #include <string>
 #include <process.h>
 
@@ -10,8 +10,8 @@ bool Server::init(int port)
     if(!m_socket.init(1000) || !m_socket.listen(port))
         return false;
 
-     if(!fileWriteExclusive("resources\\CREATED", toStr(m_socket.port()) + "," + toStr(_getpid())))
-         return false;
+    if(!fileWriteExclusive("resources\\CREATED", toStr(m_socket.port()) + "," + toStr(_getpid())))
+        return false;
 
     printf("server started: port %d, pid %d\n", m_socket.port(), _getpid());
 
@@ -33,8 +33,9 @@ void Server::run()
     {
         fileWriteStr(std::string("resources\\ALIVE") + toStr(_getpid()), ""); // pet the watchdog
         std::shared_ptr<Socket> client = m_socket.accept(); // accept incoming connection
-        if(!client->isValid())
+        if(!client->isValid()) {
             continue;
+        }
 
         int n = client->recv(); // receive data from the connection, if any
         char* data = client->data();

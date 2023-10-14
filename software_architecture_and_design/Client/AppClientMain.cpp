@@ -1,5 +1,5 @@
 #include "Appclient.h"
-#include "helpers/UtilString.h"
+#include "../helpers/UtilString.h"
 #include <vector>
 
 #pragma comment(lib, "Ws2_32.lib")
