@@ -90,11 +90,12 @@ void Socket::close()
 
 int Socket::sendFile(const std::string &path) {
     size_t len;
-    int written = 0;
     char* fileBytes;
+    int written = 0;
+
     auto splitted = split(path, "/");
     // Send file name to server
-    written += this->sendStr(splitted[splitted.size() - 1]);
+    written += this->sendStr("FILE " + splitted[splitted.size() - 1]);
 
     // Gather file bytes and send it to server
     fileBytes = fileRead(path, &len , false);

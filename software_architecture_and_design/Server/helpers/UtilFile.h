@@ -81,7 +81,7 @@ inline static size_t fileWriteExclusive(const std::string& name, std::string str
     return result;
 }
 */
-bool fileExists(const std::string& path)
+inline bool fileExists(const std::string& path)
 {
     FILE* f = fopen(path.c_str(), "r");
     if(!f)

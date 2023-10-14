@@ -3,6 +3,7 @@
 
 #include "Socket.h"
 #include "UtilString.h"
+#include "UtilFile.h"
 
 static int sSocketId = 0;
 
@@ -75,7 +76,26 @@ int Socket::recv()
 
 char* Socket::data()
 {
-    return m_recv.data();
+    static bool isFileGot = false;
+    static std::string file_path = std::string();
+
+    auto splitter = split(std::string(m_recv.data()), " ");
+
+    if (splitter[0] == "MESG") {
+        m_recv.erase(m_recv.begin(),m_recv.begin() + 5);
+        return m_recv.data();
+    } else if (splitter[0] == "FILE") {
+        isFileGot = true;
+        m_recv.erase(m_recv.begin(),m_recv.begin() + 5);
+        file_path = "../resources/" + std::string(m_recv.data());
+        return file_path.data();
+    } else if (isFileGot) {
+        fileWriteExclusive(file_path, m_recv.data());
+        isFileGot = false;
+        return file_path.data();
+    }
+
+    return NULL;
 }
 
 void Socket::close()
