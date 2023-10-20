@@ -19,6 +19,8 @@ int main()
 
     while (1) {
         if(!m.check()) {
+            Monitor::getAndSetPort();
+            Monitor::freeResourceDir();
             Monitor::reset();
             m.init();
         }

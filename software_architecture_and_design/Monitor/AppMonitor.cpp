@@ -41,3 +41,17 @@ void Monitor::reset()
 {
     sServer.terminate();
 }
+
+void Monitor::freeResourceDir() {
+    std::string directoryPath = "./resources";
+    for (const auto& file : std::filesystem::directory_iterator(directoryPath)) {
+        if (std::filesystem::is_regular_file(file)) {
+            std::filesystem::remove(file.path()); // Free the file
+        }
+    }
+}
+
+void Monitor::getAndSetPort() {
+    std::string path = std::string("./resources/CREATED");
+    sPort = split(fileReadStr(path), ",")[0];
+}

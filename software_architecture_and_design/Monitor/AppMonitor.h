@@ -11,6 +11,9 @@ public:
     bool check(); // checks Server state
     static void reset(); // terminates irresponsive Server
 
+    static void getAndSetPort();
+    static void freeResourceDir();
+
 private:
     Console m_console;
 };
