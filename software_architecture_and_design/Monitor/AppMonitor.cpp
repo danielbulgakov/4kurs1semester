@@ -46,7 +46,9 @@ void Monitor::freeResourceDir() {
     std::string directoryPath = "./resources";
     for (const auto& file : std::filesystem::directory_iterator(directoryPath)) {
         if (std::filesystem::is_regular_file(file)) {
-            std::filesystem::remove(file.path()); // Free the file
+            if (file.path().filename() != "./STATE") {
+                std::filesystem::remove_all(file.path());
+            }
         }
     }
 }

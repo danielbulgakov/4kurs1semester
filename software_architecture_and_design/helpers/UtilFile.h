@@ -6,6 +6,9 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <direct.h>
+#include <unordered_set>
+#include <filesystem>
+#include <fstream>
 
 inline void makePath(std::string path)
 {
@@ -46,6 +49,13 @@ inline static char* fileReadStr(const std::string& path)
     return fileRead(path, 0, true);
 }
 
+inline bool isImageExtension(const std::filesystem::path& filePath) {
+    std::string extension = filePath.extension().string();
+    std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+    static const std::unordered_set<std::string> validExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".bmp" };
+    return validExtensions.count(extension) > 0;
+}
+
 inline static int fileWrite(const std::string& name, const char* bulk, int len, bool append = false, bool exclusive = false)
 {
     size_t pos = name.rfind("\\");
@@ -71,6 +81,18 @@ inline static int fileWrite(const std::string& name, const char* bulk, int len, 
 inline static int fileWriteStr(const std::string& name, std::string str, bool append = false, bool exclusive = false)
 {
     return fileWrite(name, str.c_str(), str.length(), append, exclusive);
+}
+
+inline static std::string getFileStr(const std::string& path) {
+    std::ifstream input_file(path, std::ios::binary);
+    std::string file_contents((std::istreambuf_iterator<char>(input_file)), std::istreambuf_iterator<char>());
+    return file_contents;
+}
+
+inline static void writeFileStr(const std::string& path, const char * buff, int size) {
+    std::ofstream output_file(path, std::ios::binary);
+    output_file.write(buff, size);
+    output_file.close();
 }
 
 inline static int fileAppend(const std::string& name, std::string str)
