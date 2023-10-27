@@ -56,6 +56,13 @@ inline bool isImageExtension(const std::filesystem::path& filePath) {
     return validExtensions.count(extension) > 0;
 }
 
+inline std::string getExtension(const std::string& filePath) {
+    auto p = std::filesystem::path(filePath);
+    auto ext = p.extension().string();
+    ext.erase(0,1);
+    return ext;
+};
+
 inline static int fileWrite(const std::string& name, const char* bulk, int len, bool append = false, bool exclusive = false)
 {
     size_t pos = name.rfind("\\");

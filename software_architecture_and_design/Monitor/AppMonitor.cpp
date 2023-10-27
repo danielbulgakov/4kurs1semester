@@ -43,10 +43,10 @@ void Monitor::reset()
 }
 
 void Monitor::freeResourceDir() {
-    std::string directoryPath = "./resources";
+    std::string directoryPath = ".\\resources";
     for (const auto& file : std::filesystem::directory_iterator(directoryPath)) {
         if (std::filesystem::is_regular_file(file)) {
-            if (file.path().filename() != "./STATE") {
+            if (file.path().filename() != "STATE") {
                 std::filesystem::remove_all(file.path());
             }
         }
