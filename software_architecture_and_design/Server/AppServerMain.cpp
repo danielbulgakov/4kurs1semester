@@ -17,7 +17,7 @@ void fix() {
 
 int main (int argc, char *argv[])
 {
-    fix();
+    // fix();
 
     int port = argc > 1 ? atoi(argv[1]) : 0;
     Server s;
