@@ -9,7 +9,13 @@ public:
     virtual ~Monitor() = default;
     bool init(); // launches Server
     bool check(); // checks Server state
-    static void reset(); // terminates irresponsive Server
+    void reset(); // terminates irresponsive Server
+
+    bool initSpareServer();
+    bool activateSpareServer();
+    void resetSpareServer();
+
+    static void exit();
 
     static void getAndSetPort();
     static void freeResourceDir();

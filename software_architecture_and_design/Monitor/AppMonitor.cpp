@@ -9,11 +9,12 @@
 #include "../helpers/UtilFile.h"
 
 static Process sServer;
+static Process sSpareServer;
 static std::string sPort = "0";
 
 bool Monitor::init()
 {
-    m_console.handleCtrlC(Monitor::reset); // if Monitor's execution is aborted via Ctrl+C, reset() cleans up its internal state
+    m_console.handleCtrlC(Monitor::exit); // if Monitor's execution is aborted via Ctrl+C, reset() cleans up its internal state
     char cmd[256] = {};
     sprintf(cmd, "../Server/Server.exe %s", sPort.c_str());
     bool ok = sServer.create(cmd); // launching Server
@@ -37,9 +38,36 @@ bool Monitor::check()
     return true;
 }
 
+bool Monitor::initSpareServer() {
+    char cmd[256] = {};
+    sprintf(cmd, "../Server/Server.exe %s", sPort.c_str());
+    bool ok = sSpareServer.create(cmd); // launching Server
+    printf(ok ? "monitoring backup \"%s\" %s\n" : "error: cannot monitor \"%s\"\n", cmd, sSpareServer.pid().c_str());
+    if (ok)
+        sSpareServer.standby();
+    return ok;
+}
+
 void Monitor::reset()
 {
     sServer.terminate();
+}
+
+bool Monitor::activateSpareServer()
+{
+    // If the spare server is in standby mode, activate it
+    if (sSpareServer.isStandby()) {
+        sSpareServer.activate();
+        return true;
+    }
+    return false;
+}
+
+void Monitor::resetSpareServer()
+{
+    activateSpareServer();
+    sServer = sSpareServer;
+    initSpareServer();
 }
 
 void Monitor::freeResourceDir() {
@@ -57,3 +85,9 @@ void Monitor::getAndSetPort() {
     std::string path = std::string("./resources/CREATED");
     sPort = split(fileReadStr(path), ",")[0];
 }
+
+void Monitor::exit() {
+    sServer.terminate();
+    sSpareServer.terminate();
+}
+

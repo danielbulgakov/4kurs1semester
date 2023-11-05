@@ -7,23 +7,29 @@
 int main()
 {
     Monitor m;
+    bool firstStart = true;
     if(!m.init()) {
         std::cerr << "Monitor initialization failed!\n";
-        if (std::filesystem::exists(std::string("./resources/CREATED"))) {
-            std::cerr << "Server initialization failed!\n";
-        }
         return 1;
     }
+    Sleep(1000);
+    Monitor::getAndSetPort();
+    Monitor::freeResourceDir();
+    m.initSpareServer();
 
-    Sleep(3000);
 
     while (1) {
-        if(!m.check()) {
-            Monitor::getAndSetPort();
-            Monitor::freeResourceDir();
-            Monitor::reset();
+        if(!m.check() && firstStart) {
+            m.reset();
             m.init();
+            Monitor::freeResourceDir();
+        } else if (!m.check()) {
+            m.resetSpareServer();
+            Monitor::freeResourceDir();
+        } else {
+            firstStart = false;
         }
+
         Sleep(3000);
     }
 }

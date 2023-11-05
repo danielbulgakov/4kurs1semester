@@ -39,3 +39,17 @@ void Process::terminate()
     CloseHandle(m_thread);
     m_init = false;
 }
+
+bool Process::isStandby() {
+    return m_isStandby;
+}
+
+void Process::standby() {
+    SuspendThread(m_thread);
+    m_isStandby = true;
+}
+
+void Process::activate() {
+    ResumeThread(m_thread);
+    m_isStandby = false;
+}

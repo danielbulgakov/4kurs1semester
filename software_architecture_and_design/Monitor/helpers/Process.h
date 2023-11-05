@@ -13,9 +13,12 @@ public:
     bool wait(int timeout); // waits for certain period of time and immediately reacts if child process exits during this time
     std::string pid(); // child process' PID
     void terminate(); // kills child process
-
+    bool isStandby ();
+    void standby();
+    void activate();
 private:
     HANDLE m_process;
     HANDLE m_thread;
+    bool m_isStandby = false;
     bool m_init = false;
 };
