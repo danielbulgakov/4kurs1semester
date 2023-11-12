@@ -1,0 +1,2 @@
+C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\ar.exe qc libhelpers_server.a CMakeFiles/helpers_server.dir/Socket.cpp.obj CMakeFiles/helpers_server.dir/SocketServer.cpp.obj
+C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\ranlib.exe libhelpers_server.a

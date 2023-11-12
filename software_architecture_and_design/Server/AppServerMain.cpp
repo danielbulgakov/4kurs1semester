@@ -2,8 +2,6 @@
 #include "AppServer.h"
 #include <filesystem>
 
-#pragma comment(lib, "Ws2_32.lib")
-
 void fix() {
     std::string directoryPath = ".\\resources";
     for (const auto& file : std::filesystem::directory_iterator(directoryPath)) {

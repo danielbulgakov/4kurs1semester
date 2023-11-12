@@ -9,6 +9,7 @@
 #include <unordered_set>
 #include <filesystem>
 #include <fstream>
+#include <algorithm>
 
 inline void makePath(std::string path)
 {

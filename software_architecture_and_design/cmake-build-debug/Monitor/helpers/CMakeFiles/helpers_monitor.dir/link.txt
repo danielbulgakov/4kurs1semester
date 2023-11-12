@@ -1,0 +1,2 @@
+C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\ar.exe qc libhelpers_monitor.a CMakeFiles/helpers_monitor.dir/Console.cpp.obj CMakeFiles/helpers_monitor.dir/Process.cpp.obj
+C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\ranlib.exe libhelpers_monitor.a
