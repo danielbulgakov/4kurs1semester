@@ -13,6 +13,10 @@ add_executable(Server AppServerMain.cpp AppServer.cpp)
 # include directories
 include_directories(${PROJECT_SOURCE_DIR})
 
+if(MINGW)
+    target_link_libraries(Server ws2_32)
+endif()
+
 # add subdirectory
 add_subdirectory(helpers)
 target_link_libraries(Server helpers_server)

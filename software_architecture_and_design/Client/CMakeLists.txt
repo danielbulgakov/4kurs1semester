@@ -13,10 +13,6 @@ add_executable(Client AppClientMain.cpp AppClient.cpp)
 # include directories
 include_directories(${PROJECT_SOURCE_DIR})
 
-if(MINGW)
-    target_link_libraries(helpers_client ws2_32)
-endif()
-
 # add subdirectory
 add_subdirectory(helpers)
 target_link_libraries(Client helpers_client)
