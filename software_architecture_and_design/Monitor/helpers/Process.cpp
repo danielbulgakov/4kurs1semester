@@ -40,16 +40,22 @@ void Process::terminate()
     m_init = false;
 }
 
-bool Process::isStandby() {
-    return m_isStandby;
-}
-
-void Process::standby() {
+void Process::suspend() {
     SuspendThread(m_thread);
-    m_isStandby = true;
+    m_isSuspend = true;
 }
 
-void Process::activate() {
+void Process::resume() {
     ResumeThread(m_thread);
-    m_isStandby = false;
+    m_isSuspend = false;
+}
+
+bool Process::isSuspended() {
+    return m_isSuspend;
+}
+
+bool Process::isAlive() {
+    DWORD exitCode;
+    GetExitCodeThread(m_thread, &exitCode);
+    return exitCode == STILL_ACTIVE;
 }

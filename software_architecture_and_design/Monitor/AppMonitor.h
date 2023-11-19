@@ -8,17 +8,18 @@ public:
     Monitor() = default;
     virtual ~Monitor() = default;
     bool init(); // launches Server
-    bool check(); // checks Server state
+    bool isServerAlive(); // checks Server state
     void reset(); // terminates irresponsive Server
 
-    bool initSpareServer();
-    bool activateSpareServer();
-    void resetSpareServer();
-
     static void exit();
+    /** Updates for Spare Server */
+    bool initMainServer();
+    bool initSpareServer();
+    void resetSpare();
+    void changeSpareToMain();
 
-    static void getAndSetPort();
-    static void freeResourceDir();
+    void getAndSetGlobalPort();
+    void freeResourceDir();
 
 private:
     Console m_console;
