@@ -13,9 +13,9 @@ public:
     Socket();
     virtual ~Socket();
     bool init(uint32_t timeout = 0); // creates socket and performs basic initialization
-    bool isValid(); // checks if socket is valid
-    int send(const char* msg, int len); // sends a message via socket
-    int sendStr(const std::string& str); // sends a string via socket
+    bool isValid() const; // checks if socket is valid
+    int send(const char* msg, int len) const; // sends a message via socket
+    int sendStr(const std::string& str) const; // sends a string via socket
     int sendFile(const std::string& path); // send a file via socket
     int recv(); // receives a message via socket
     char* data(); // buffer that holds received message

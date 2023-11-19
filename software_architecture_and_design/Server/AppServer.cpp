@@ -5,6 +5,9 @@
 #include <string>
 #include <process.h>
 #include <filesystem>
+#include <map>
+#include "../helpers/Message.h"
+#include "../helpers/User.h"
 
 bool Server::init(int port)
 {
@@ -30,6 +33,15 @@ bool Server::init(int port)
 
 void Server::run()
 {
+    std::map<std::string, std::string> loginPasswordMap;
+
+    // Add some logins and passwords
+    loginPasswordMap["admin"] = "12345";
+    loginPasswordMap["log1"] = "1";
+    loginPasswordMap["log2"] = "2";
+
+    User u;
+
     while(1)
     {
         fileWriteStr(std::string("resources\\ALIVE") + toStr(_getpid()), ""); // pet the watchdog
@@ -81,35 +93,70 @@ void Server::run()
             } else {
                 client->sendStr("HTTP/1.1 404 Not Found\r\n\r\n");
             }
-        }
-        else if(tokens.size() >= 2 && tokens[0] == "MSG") {
-            const int prefix = 4; // Don`t write prefix to message
-            m_data.push_back(data + prefix); // store it in the feed
-            fileAppend("resources\\STATE", m_data.back() + "\n"); // store it in the file for subsequent runs
-        }
-        else if(tokens.size() >= 2 && tokens[0] == "FLE") {
-            std::string name = "/resources/common/" + tokens[1];
-            std::string path = ".\\resources\\common\\" + tokens[1];
-            int prefix = 4 + tokens[1].length() + 1;
-            int size = n - prefix;
-            int trys = 0;
-            if (fileExists(path)) {
-                while (fileExists(path) && trys < 20) {
-                    trys++;
-                }
-                path = ".\\resources\\common\\(" + toStr(trys) + ")" + tokens[1];
-            }
-            // Use data, not tokens, because png hava char terminate characters
-            // That will cause to not store all file data
-            fileWrite(path, data + prefix, size);
+        } else {
+            Message m;
+            m.destringify(data);
 
-            m_data.push_back(name);
-            fileAppend("resources\\STATE", m_data.back() + "\n");
+            switch (m.getType()) {
+                case Msg: {
+                    m_data.push_back(m.getContent());
+                    fileAppend("resources\\STATE", m.getContent() + "\n");
+                    break;
+                }
+                case File: {
+                    int trys;
+                    std::string name = "/resources/common/" + m.getFileName();
+                    std::string path = R"(.\resources\common\)" + m.getFileName();
+                    if (fileExists(path)) {
+                        while (fileExists(path) && trys < 20) {
+                            trys++;
+                        }
+                        path = R"(.\resources\common\()" + toStr(trys) + ")" + m.getFileName();
+                    }
+                    // Use data, not tokens, because png hava char terminate characters
+                    // That will cause to not store all file data
+                    fileWriteStr(path, m.getContent());
+
+                    m_data.push_back(name);
+                    fileAppend("resources\\STATE", m_data.back() + "\n");
+                    break;
+                }
+                case System: {
+
+
+
+                    break;
+                }
+            }
         }
-        else if(n > 0) // this is Client's request who wants to upload some data
-        {
-            m_data.push_back(data); // store it in the feed
-            fileAppend("resources\\STATE", m_data.back() + "\n"); // store it in the file for subsequent runs
-        }
+//        else if(tokens.size() >= 2 && tokens[0] == "MSG") {
+//            const int prefix = 4; // Don`t write prefix to message
+//            m_data.push_back(data + prefix); // store it in the feed
+//            fileAppend("resources\\STATE", m_data.back() + "\n"); // store it in the file for subsequent runs
+//        }
+//        else if(tokens.size() >= 2 && tokens[0] == "FLE") {
+//            std::string name = "/resources/common/" + tokens[1];
+//            std::string path = ".\\resources\\common\\" + tokens[1];
+//            int prefix = 4 + tokens[1].length() + 1;
+//            int size = n - prefix;
+//            int trys = 0;
+//            if (fileExists(path)) {
+//                while (fileExists(path) && trys < 20) {
+//                    trys++;
+//                }
+//                path = ".\\resources\\common\\(" + toStr(trys) + ")" + tokens[1];
+//            }
+//            // Use data, not tokens, because png hava char terminate characters
+//            // That will cause to not store all file data
+//            fileWrite(path, data + prefix, size);
+//
+//            m_data.push_back(name);
+//            fileAppend("resources\\STATE", m_data.back() + "\n");
+//        }
+//        else if(n > 0) // this is Client's request who wants to upload some data
+//        {
+//            m_data.push_back(data); // store it in the feed
+//            fileAppend("resources\\STATE", m_data.back() + "\n"); // store it in the file for subsequent runs
+//        }
     }
 }

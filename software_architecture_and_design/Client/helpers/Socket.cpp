@@ -1,8 +1,6 @@
 #include <winsock2.h>
-#include <WS2tcpip.h>
 
 #include <filesystem>
-#include <fstream>
 #include "Socket.h"
 #include "../../helpers/UtilFile.h"
 
@@ -12,7 +10,7 @@ Socket::Socket()
 {
     if(++sSocketId == 1)
     {
-        WSAData wsaData;
+        WSAData wsaData{};
         WSAStartup(MAKEWORD(2,2), &wsaData); // this is executed once during app startup
     }
 }
@@ -39,12 +37,12 @@ bool Socket::init(uint32_t timeout)
     return true;
 }
 
-bool Socket::isValid()
+bool Socket::isValid() const
 {
     return m_socket >= 0;
 }
 
-int Socket::send(const char* msg, int len)
+int Socket::send(const char* msg, int len) const
 {
     if(len <= 0)
         return 0;
@@ -52,7 +50,7 @@ int Socket::send(const char* msg, int len)
     return ::send(m_socket, msg, len, 0);
 }
 
-int Socket::sendStr(const std::string& str)
+int Socket::sendStr(const std::string& str) const
 {
     std::string msg = "MSG " + str;
     return send(msg.c_str(), msg.length());

@@ -2,6 +2,10 @@
 set(HELPER_HEADERS
         UtilFile.h
         UtilString.h
+        Message.h
+        User.h
+        Token.h
+        MType.h
 )
 
 # Create the helper library target
