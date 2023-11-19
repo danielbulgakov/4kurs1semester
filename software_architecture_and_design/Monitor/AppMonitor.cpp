@@ -25,7 +25,7 @@ bool Monitor::isServerAlive()
     std::filesystem::remove(heartBeatFilePath);
 
     // Check if we got beat and if Server process didn't crash
-    if (isGotBeat || sServer.wait(3000)) {
+    if (isGotBeat || sServer.isAlive()) {
         return true;
     }
     return false;
@@ -83,7 +83,13 @@ void Monitor::resetSpare() {
 void Monitor::changeSpareToMain() {
     sServer.terminate();
 
-    sServer = sSpareServer;
-    sServer.resume();
+    if (sSpareServer.isAlive()) {
+        sServer = sSpareServer;
+        sServer.resume();
+    } else {
+        sSpareServer.terminate();
+        initMainServer();
+        initSpareServer();
+    }
 }
 
