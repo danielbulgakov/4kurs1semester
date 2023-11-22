@@ -2,14 +2,13 @@
 #include "helpers/Console.h"
 
 // Monitor app that manages Server's lifecycle and monitors its state
-class Monitor
-{
-public:
+class Monitor {
+   public:
     Monitor() = default;
     virtual ~Monitor() = default;
-    bool init(); // launches Server
-    bool isServerAlive(); // checks Server state
-    void reset(); // terminates irresponsive Server
+    bool init();           // launches Server
+    bool isServerAlive();  // checks Server state
+    void reset();          // terminates irresponsive Server
 
     static void exit();
     /** Updates for Spare Server */
@@ -21,6 +20,6 @@ public:
     void getAndSetGlobalPort();
     void freeResourceDir();
 
-private:
+   private:
     Console m_console;
 };
