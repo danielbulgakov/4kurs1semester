@@ -15,15 +15,9 @@ class Process {
         int timeout);  // waits for certain period of time and immediately reacts if child process exits during this time
     std::string pid();  // child process' PID
     void terminate();   // kills child process
-    /** Functions to sleep and wake up proccess */
-    void suspend();
-    void resume();
-    bool isSuspended();
-    bool isAlive();
 
    private:
     HANDLE m_process;
     HANDLE m_thread;
-    bool m_isSuspend = false;
     bool m_init = false;
 };

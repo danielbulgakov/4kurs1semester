@@ -41,27 +41,3 @@ Process::terminate() {
     CloseHandle(m_thread);
     m_init = false;
 }
-
-void
-Process::suspend() {
-    SuspendThread(m_thread);
-    m_isSuspend = true;
-}
-
-void
-Process::resume() {
-    ResumeThread(m_thread);
-    m_isSuspend = false;
-}
-
-bool
-Process::isSuspended() {
-    return m_isSuspend;
-}
-
-bool
-Process::isAlive() {
-    DWORD exitCode;
-    GetExitCodeThread(m_thread, &exitCode);
-    return exitCode == STILL_ACTIVE;
-}

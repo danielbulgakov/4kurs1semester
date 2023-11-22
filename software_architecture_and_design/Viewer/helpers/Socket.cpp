@@ -1,9 +1,7 @@
 #include <WS2tcpip.h>
 #include <winsock2.h>
 
-#include <filesystem>
-#include <fstream>
-#include "../../helpers/UtilFile.h"
+#include "../../helpers/UtilString.h"
 #include "Socket.h"
 
 static int sSocketId = 0;
@@ -52,8 +50,7 @@ Socket::send(const char* msg, int len) {
 
 int
 Socket::sendStr(const std::string& str) {
-    std::string msg = "MSG " + str;
-    return send(msg.c_str(), msg.length());
+    return send(str.c_str(), str.length());
 }
 
 int
@@ -84,16 +81,4 @@ Socket::close() {
         shutdown(m_socket, SD_BOTH);
         closesocket(m_socket);
     }
-}
-
-int
-Socket::sendFile(const std::string& path) {
-    std::string msg = "";
-
-    msg += "FLE ";
-    msg += std::filesystem::path(path).filename().string() + " ";
-
-    msg += getFileStr(path);
-
-    return send(msg.c_str(), msg.length());
 }
