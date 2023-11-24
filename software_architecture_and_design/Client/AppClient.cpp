@@ -1,17 +1,12 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "AppClient.h"
 #include <chrono>
-#include <map>
 #include <thread>
-#include "../helpers/UtilFile.h"
 #include "../helpers/UtilString.h"
-#include "helpers/SocketClient.h"
 
 bool
 Client::send(const std::string& url, const std::string& msg) {
-    SocketClient s;
-
-    printf("%s", msg.c_str());
+//    printf("%s", msg.c_str());
 
     auto start = std::chrono::high_resolution_clock::now();
     while (!s.init() || !s.connect(url)) {
@@ -23,19 +18,20 @@ Client::send(const std::string& url, const std::string& msg) {
             return false;
         }
         printf("Server not available. Retrying...\n");
-        std::this_thread::sleep_for(
-            std::chrono::seconds(5));  // wait for 5 second before retrying
+        std::this_thread::sleep_for(std::chrono::seconds(5));  // wait for 5 second before retrying
     }
 
     int len;
-    printf("sending text message \"%s\"\n", msg.c_str());
+//    printf("sending text message \"%s\"\n", msg.c_str());
 
-    if (fileExists(msg)) {
-        len = s.sendFile(msg);
-    } else {
-        len = s.sendStr(msg);
-    }
+    len = s.send(msg.c_str(), msg.length());
 
-    printf("sent %d bytes\n", len);
+//    printf("sent %d bytes\n", len);
     return len > 0;
+}
+
+const char*
+Client::recieve() {
+    s.recv();
+    return s.data();
 }

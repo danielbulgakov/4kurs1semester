@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include "helpers/SocketServer.h"
+#include "helpers/UserDataBase.h"
 
 // Server that accepts connections from Clients and Viewers.
 // Clients can upload text and images to Server.
@@ -21,4 +22,9 @@ class Server {
     std::vector<std::string> m_data;  // representation of uploaded data
     std::vector<std::shared_ptr<Socket>>
         m_subscribers;  // storage of Viewers receiving push notifications
+    UserDatabase userDB;
+
+
+    std::string pendingLogin;
+    std::string pendingPassword;
 };

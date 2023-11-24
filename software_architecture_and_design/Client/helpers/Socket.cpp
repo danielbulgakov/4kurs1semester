@@ -1,8 +1,7 @@
-#include <WS2tcpip.h>
 #include <winsock2.h>
 
 #include <filesystem>
-#include <fstream>
+#include "../../helpers/Message.h"
 #include "../../helpers/UtilFile.h"
 #include "Socket.h"
 
@@ -31,8 +30,7 @@ Socket::init(uint32_t timeout) {
     }
 
     if (timeout)
-        setsockopt(m_socket, SOL_SOCKET, SO_RCVTIMEO, (char*)&timeout,
-                   sizeof(DWORD));
+        setsockopt(m_socket, SOL_SOCKET, SO_RCVTIMEO, (char*)&timeout, sizeof(DWORD));
     m_timeout = timeout;
     return true;
 }
@@ -51,12 +49,6 @@ Socket::send(const char* msg, int len) {
 }
 
 int
-Socket::sendStr(const std::string& str) {
-    std::string msg = "MSG " + str;
-    return send(msg.c_str(), msg.length());
-}
-
-int
 Socket::recv() {
     int cur = 0;
     int total = 0;
@@ -64,8 +56,7 @@ Socket::recv() {
     do {
         if (m_recv.size() < total + CHUNK)
             m_recv.resize(m_recv.size() + CHUNK);
-        cur = ::recv(m_socket, m_recv.data() + total, m_recv.size() - total - 1,
-                     0);
+        cur = ::recv(m_socket, m_recv.data() + total, m_recv.size() - total - 1, 0);
         if (cur > 0)
             total += cur;
     } while (cur > 0);
@@ -86,14 +77,3 @@ Socket::close() {
     }
 }
 
-int
-Socket::sendFile(const std::string& path) {
-    std::string msg = "";
-
-    msg += "FLE ";
-    msg += std::filesystem::path(path).filename().string() + " ";
-
-    msg += getFileStr(path);
-
-    return send(msg.c_str(), msg.length());
-}
