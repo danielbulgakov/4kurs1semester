@@ -29,3 +29,4 @@ bool
 Console::isEscapePressed() {
     return GetAsyncKeyState(VK_ESCAPE);
 }
+

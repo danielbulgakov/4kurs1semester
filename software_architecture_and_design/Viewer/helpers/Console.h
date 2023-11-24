@@ -12,4 +12,5 @@ class Console {
         *handler)());  // allows to specify a function for handling Ctrl+C keypress
     void clearScreen();      // clears console screen
     bool isEscapePressed();  // checks if ESC key is pressed
+    bool isEnterPressed();
 };

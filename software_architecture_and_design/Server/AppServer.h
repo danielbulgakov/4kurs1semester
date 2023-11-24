@@ -4,6 +4,7 @@
 #include <set>
 #include <string>
 #include <vector>
+#include "helpers/DataBase.h"
 #include "helpers/SocketServer.h"
 
 // Server that accepts connections from Clients and Viewers.
@@ -17,6 +18,7 @@ class Server {
     run();  // accept incoming connections, receive their data and send responses
 
    private:
+    Database db;
     SocketServer m_socket;            // server socket
     std::vector<std::string> m_data;  // representation of uploaded data
     std::vector<std::shared_ptr<Socket>>
