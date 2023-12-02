@@ -2,14 +2,15 @@
 #include <iostream>
 #include <vector>
 #include "../helpers/Message.h"
-#include "../helpers/UtilString.h"
 #include "../helpers/UtilFile.h"
+#include "../helpers/UtilString.h"
 #include "Appclient.h"
 
 #pragma comment(lib, "Ws2_32.lib")
 
 bool isLoginStage = true;
 std::string auth;
+std::string perm;
 std::string username;
 
 bool
@@ -51,7 +52,10 @@ main(int argc, char* argv[]) {
 
         if (hasTokenTypeToken(data, "token: ")) {
             size_t tokenPos = data.find("token: ") + std::strlen("token: ");
-            auth = data.substr(tokenPos);
+            std::string temp = data.substr(tokenPos);
+
+            auth = split(temp, ":")[0];
+            perm = split(temp, ":")[1];
 
             isLoginStage = false;
             break;
@@ -76,18 +80,26 @@ main(int argc, char* argv[]) {
         }
     }
 
+    std::cout << "\nPermissions: " << perm << "\n";
+
     while (true) {
         std::string buff;
 
         // Needed ignore to not let cin send empty line in the beginning of loop
         // For some reason cin found in stream \n and send it to server as new message
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << username << ": ";
+//        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "\n" << username << ": ";
         std::getline(std::cin, buff);
 
-        if (auth.empty()) return 1;
+        if (auth.empty())
+            return 1;
 
         if (fileExists(buff)) {
+            if (perm != "admin") {
+                std::cout << "Not enough permissions" << std::endl;
+                continue;
+            }
+
             Message m = Message(FILE_TRANSFER, auth, std::filesystem::path(buff).filename().string(), getFileStr(buff));
             std::string serialized = Message::serialize(m);
             c.send(argv[1], serialized);
@@ -96,7 +108,5 @@ main(int argc, char* argv[]) {
             std::string serialized = Message::serialize(m);
             c.send(argv[1], serialized);
         }
-
     }
-
 }

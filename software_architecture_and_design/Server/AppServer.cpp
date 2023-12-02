@@ -130,10 +130,18 @@ Server::run() {
             switch (m.type) {
                 case SYSTEM: {
                     auto parsed = parseLoginPassword(m.content);
+                    std::string perm;
 
                     if (!pendingLogin.empty() && parsed.first == "YES") {
                         userDB.addUser( pendingLogin, pendingPassword, NORMAL);
-                        client->sendStr("token: " + userDB.getTokenByLogin(pendingLogin));
+
+                        if (userDB.getPrivilegeLevel(userDB.getTokenByLogin(pendingLogin)) == ADMIN) {
+                            perm = "admin";
+                        } else {
+                            perm = "normal";
+                        }
+
+                        client->sendStr("token: " + userDB.getTokenByLogin(pendingLogin) + ":" + perm);
 
                         pendingLogin.clear();
                         pendingPassword.clear();
@@ -148,7 +156,14 @@ Server::run() {
                         client->sendStr("REGISTER\n");
                     } else {
                         if (userDB.authenticateUser(auth, parsed.second)) {
-                            client->sendStr("token: " + auth);
+
+                            if (userDB.getPrivilegeLevel(auth) == ADMIN) {
+                                perm = "admin";
+                            } else {
+                                perm = "normal";
+                            }
+
+                            client->sendStr("token: " + auth + ":" + perm);
                         } else {
                             client->sendStr("Wrong Password!");
                         }
