@@ -4,6 +4,7 @@
     "files.associations": {
         "vector": "cpp",
         "xstring": "cpp",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "optional": "cpp"
     }
 }

@@ -88,11 +88,14 @@ main(int argc, char* argv[]) {
         // Needed ignore to not let cin send empty line in the beginning of loop
         // For some reason cin found in stream \n and send it to server as new message
 //        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << "\n" << username << ": ";
-        std::getline(std::cin, buff);
+        std::cout << "\n" << username << ": " << std::flush;
+        std::cin >> buff;
 
         if (auth.empty())
             return 1;
+
+        if (buff.empty())
+            continue;
 
         if (fileExists(buff)) {
             if (perm != "admin") {

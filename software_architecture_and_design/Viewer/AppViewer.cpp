@@ -1,6 +1,9 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include "AppViewer.h"
 #include <map>
+#include <iostream>
+
+
+#include "AppViewer.h"
 #include "../helpers/UtilFile.h"
 #include "../helpers/UtilString.h"
 #include "helpers/Socket.h"
@@ -60,13 +63,16 @@ Viewer::run() {
         char* data = m_socket.data();
 
         if (len > 0) {
+            std::cout << std::endl;
             m_console.clearScreen();  // clear screen
             for (std::string& str : split(data, "\n"))
                 m_data.push_back(
                     str);  // append new message to the representation of server feed
 
-            for (std::string str : m_data)
-                printf("%s\n", str.c_str());  // display entire feed
+            for (std::string str : m_data) {
+                std::cout << str << std::endl << std::flush;
+            }
+
             printf("----------\nPress ESC to type message\n");
         }
         if (m_console.isEscapePressed())  // pressing ESC activates typing mode

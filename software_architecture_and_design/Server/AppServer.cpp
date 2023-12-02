@@ -7,14 +7,15 @@
 #include "../helpers/UtilFile.h"
 #include "../helpers/UtilString.h"
 
-std::pair<std::string, std::string> parseLoginPassword(const std::string& input) {
+std::pair<std::string, std::string>
+parseLoginPassword(const std::string& input) {
     std::pair<std::string, std::string> result;
 
     // Find the position of "login: "
     size_t loginPos = input.find("username: ");
     if (loginPos != std::string::npos) {
         // Extract the login
-        size_t loginStart = loginPos + 10; // Length of "login: "
+        size_t loginStart = loginPos + 10;  // Length of "login: "
         size_t loginEnd = input.find(" ", loginStart);
         if (loginEnd != std::string::npos) {
             result.first = input.substr(loginStart, loginEnd - loginStart);
@@ -31,7 +32,7 @@ std::pair<std::string, std::string> parseLoginPassword(const std::string& input)
     size_t passwordPos = input.find("password: ");
     if (passwordPos != std::string::npos) {
         // Extract the password
-        size_t passwordStart = passwordPos + 10; // Length of "password: "
+        size_t passwordStart = passwordPos + 10;  // Length of "password: "
         result.second = input.substr(passwordStart, std::string::npos - 1);
     }
 
@@ -56,8 +57,8 @@ Server::init(int port) {
         delete[] state;
     }
 
-    userDB.addUser( "simple", "simple", NORMAL, "simple");
-    userDB.addUser( "admin", "admin", ADMIN, "admin");
+    userDB.addUser("simple", "simple", NORMAL, "simple");
+    userDB.addUser("admin", "admin", ADMIN, "admin");
 
     return true;
 }
@@ -124,6 +125,10 @@ Server::run() {
             } else {
                 client->sendStr("HTTP/1.1 404 Not Found\r\n\r\n");
             }
+        } else if (tokens.size() == 1 && tokens[0] == "SUBSCRIBE") {
+            // this is Viewer's request who wants to subscribe to notifications
+            m_subscribers.push_back(client);  // subscribed
+            this->sendEntireFeed(client);
         } else {
             Message m = Message::deserialize(std::string(data, n));
 
@@ -133,7 +138,7 @@ Server::run() {
                     std::string perm;
 
                     if (!pendingLogin.empty() && parsed.first == "YES") {
-                        userDB.addUser( pendingLogin, pendingPassword, NORMAL);
+                        userDB.addUser(pendingLogin, pendingPassword, NORMAL);
 
                         if (userDB.getPrivilegeLevel(userDB.getTokenByLogin(pendingLogin)) == ADMIN) {
                             perm = "admin";
@@ -174,10 +179,12 @@ Server::run() {
                     m_data.push_back(userDB.getLogin(m.token.value()) + " : " + m.content);  // store it in the feed
                     fileAppend("resources\\STATE",
                                m_data.back() + "\n");  // store it in the file for subsequent runs
+                    updateLastEntryForAll();
                     break;
                 }
                 case FILE_TRANSFER: {
-                    if (userDB.getPrivilegeLevel(m.token.value()) < ADMIN) break;
+                    if (userDB.getPrivilegeLevel(m.token.value()) < ADMIN)
+                        break;
 
                     std::string name = "/resources/common/" + m.fileName.value();
                     std::string path = ".\\resources\\common\\" + m.fileName.value();
@@ -195,52 +202,33 @@ Server::run() {
                     m_data.push_back(userDB.getLogin(m.token.value()) + " : ");  // store it in the feed
                     fileAppend("resources\\STATE",
                                m_data.back() + "\n");  // store it in the file for subsequent runs
+                    updateLastEntryForAll();
 
                     m_data.push_back(name);
                     fileAppend("resources\\STATE", m_data.back() + "\n");
-
+                    updateLastEntryForAll();
                     break;
                 }
             }
         }
-        //        } else if (tokens.size() >= 2 && tokens[0] == "MSG") {
-        //            const int prefix = 4;             // Don`t write prefix to message
-        //            m_data.push_back(data + prefix);  // store it in the feed
-        //            fileAppend("resources\\STATE",
-        //                       m_data.back() +
-        //                           "\n");  // store it in the file for subsequent runs
-        //        } else if (tokens.size() >= 2 && tokens[0] == "FLE") {
-        //            std::string name = "/resources/common/" + tokens[1];
-        //            std::string path = ".\\resources\\common\\" + tokens[1];
-        //            int prefix = 4 + tokens[1].length() + 1;
-        //            int size = n - prefix;
-        //            int trys = 0;
-        //            if (fileExists(path)) {
-        //                while (fileExists(path) && trys < 20) {
-        //                    trys++;
-        //                }
-        //                path =
-        //                    ".\\resources\\common\\(" + toStr(trys) + ")" + tokens[1];
-        //            }
-        //            // Use data, not tokens, because png hava char terminate characters
-        //            // That will cause to not store all file data
-        //            fileWrite(path, data + prefix, size);
-        //
-        //            m_data.push_back(name);
-        //            fileAppend("resources\\STATE", m_data.back() + "\n");
-        //        } else if (
-        //            tokens.size() == 1 &&
-        //            tokens[0] ==
-        //                "SUBSCRIBE")  // this is Viewer's request who wants to subscribe to notifications
-        //        {
-        //            m_subscribers.push_back(client);  // subscribed
-        //        } else if (n >
-        //                   0)  // this is Client's request who wants to upload some data
-        //        {
-        //            m_data.push_back(data);  // store it in the feed
-        //            fileAppend("resources\\STATE",
-        //                       m_data.back() +
-        //                           "\n");  // store it in the file for subsequent runs
-        //        }
+    }
+}
+
+void
+Server::sendEntireFeed(std::shared_ptr<Socket>& s) {
+    for (const auto& entry: m_data) {
+        s->sendStr(static_cast<std::string>(entry) + "\n");
+    }
+}
+
+void
+Server::sendLastEntryInFeed(std::shared_ptr<Socket>& s) {
+    s->sendStr(static_cast<std::string>(m_data.back()));
+}
+
+void
+Server::updateLastEntryForAll() {
+    for (const auto& sub : m_subscribers) {
+        this->sendLastEntryInFeed(const_cast<std::shared_ptr<Socket>&>(sub));
     }
 }
