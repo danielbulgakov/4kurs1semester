@@ -6,7 +6,7 @@
 #include "../helpers/UtilString.h"
 
 static Process sServer;
-static Process sSpareServer;
+//static Process sSpareServer;
 static std::string sPort = "0";
 
 bool
@@ -69,39 +69,40 @@ Monitor::initMainServer() {
 
 bool
 Monitor::initSpareServer() {
-    char cmd[256] = {};
-    sprintf(cmd, "../Server/Server.exe %s", sPort.c_str());
-    bool ok = sSpareServer.create(cmd);  // launching Server
-    printf(ok ? "monitoring spare pid = %s\n"
-              : "error: cannot monitor spare pid = %s\n",
-           sSpareServer.pid().c_str());
+//    char cmd[256] = {};
+//    sprintf(cmd, "../Server/Server.exe %s", sPort.c_str());
+//    bool ok = sSpareServer.create(cmd);  // launching Server
+//    printf(ok ? "monitoring spare pid = %s\n"
+//              : "error: cannot monitor spare pid = %s\n",
+//           sSpareServer.pid().c_str());
+//
+//    sSpareServer.suspend();
 
-    sSpareServer.suspend();
-
-    return ok;
+    return true;
 }
 
 void
 Monitor::exit() {
     sServer.terminate();
-    sSpareServer.terminate();
+//    sSpareServer.terminate();
 }
 
 void
 Monitor::resetSpare() {
-    sSpareServer.terminate();
+//    sSpareServer.terminate();
 }
 
 void
 Monitor::changeSpareToMain() {
     sServer.terminate();
+    initMainServer();
 
-    if (sSpareServer.isAlive()) {
-        sServer = sSpareServer;
-        sServer.resume();
-    } else {
-        sSpareServer.terminate();
-        initMainServer();
-        initSpareServer();
-    }
+//    if (sSpareServer.isAlive()) {
+//        sServer = sSpareServer;
+//        sServer.resume();
+//    } else {
+//        sSpareServer.terminate();
+//        initMainServer();
+//        initSpareServer();
+//    }
 }
